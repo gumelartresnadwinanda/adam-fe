@@ -34,7 +34,7 @@ const AppRoutes = () => {
         <Route path="/logout" element={<Logout />} />
 
         {/* Redirect unknown paths to login */}
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/profile" />} />
       </Routes>
     </Router>
   );

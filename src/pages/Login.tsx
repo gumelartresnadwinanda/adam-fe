@@ -56,7 +56,7 @@ const Login = () => {
             <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
           </div>
 
-          <Button type="submit" className="w-full">Sign In</Button>
+          <Button type="submit" className="w-full" variant="primary">Sign In</Button>
         </Form>
       </Formik>
 

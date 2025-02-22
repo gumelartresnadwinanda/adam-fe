@@ -86,7 +86,9 @@ const Register = () => {
             <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1" />
           </div>
 
-          <Button type="submit" className="w-full">Register</Button>
+          <Button type="submit" variant="primary" className="w-full">
+            Register
+          </Button>
         </Form>
       </Formik>
 
