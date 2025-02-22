@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
-import { Button } from "../components/button";
+import { Button } from "../components/Button";
 import axios from "axios";
 
 const Register = () => {
@@ -22,7 +22,7 @@ const Register = () => {
       .matches(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores")
       .required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string().min(6, "Must be at least 6 characters").required("Required"),
+    password: Yup.string().min(8, "Must be at least 8 characters").required("Required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("Required"),
@@ -38,7 +38,11 @@ const Register = () => {
       navigate("/login"); // Redirect to login page
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setError(error.response?.data?.error);
+        if (axios.isAxiosError(error) && error.response) {
+          setError(error.response.data?.error || "Registration failed. Try again.");
+        } else {
+          setError("Registration failed. Try again.");
+        }
       } else {
         setError("Registration failed. Try again.");
       }

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
-import { Button } from "../components/button";
+import { Button } from "../components/Button";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 

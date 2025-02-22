@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components/button";
+import { Button } from "../components/Button";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 
@@ -32,7 +32,7 @@ const Profile = () => {
   }, []);
 
   const handleLogout = async () => {
-    await logout(); 
+    await logout();
     navigate("/login");
   };
 
@@ -41,19 +41,19 @@ const Profile = () => {
   }
 
   return (
-      <div className="p-6 text-center">
-        <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Your Profile</h2>
-        {user ? (
-          <div>
-            <p className="text-gray-700 dark:text-gray-300">Full Name: {user.full_name}</p>
-            <p className="text-gray-700 dark:text-gray-300">Username: {user.username}</p>
-            <p className="text-gray-700 dark:text-gray-300">Email: {user.email}</p>
-          </div>
-        ) : (
-          <p className="text-gray-700 dark:text-gray-300">Failed to load user details.</p>
-        )}
-        <Button onClick={handleLogout} className="mt-4">Logout</Button>
-      </div>
+    <div className="p-6 text-center">
+      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Your Profile</h2>
+      {user ? (
+        <div>
+          <p className="text-gray-700 dark:text-gray-300">Full Name: {user.full_name}</p>
+          <p className="text-gray-700 dark:text-gray-300">Username: {user.username}</p>
+          <p className="text-gray-700 dark:text-gray-300">Email: {user.email}</p>
+        </div>
+      ) : (
+        <p className="text-gray-700 dark:text-gray-300">Failed to load user details.</p>
+      )}
+      <Button onClick={handleLogout} className="mt-4">Logout</Button>
+    </div>
   );
 };
 
