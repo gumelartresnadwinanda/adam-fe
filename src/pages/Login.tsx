@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import * as Yup from "yup";
 import { Button } from "../components/Button";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [error, setError] = useState("");
 
@@ -31,7 +32,13 @@ const Login = () => {
       if (response.status !== 200 && response.status !== 201) throw new Error("Login failed");
 
       login();
-      navigate("/profile");
+      const urlParams = new URLSearchParams(location.search);
+      const redirectUrl = urlParams.get('redirect');
+      if (redirectUrl) {
+        navigate(redirectUrl);
+      } else {
+        navigate("/profile");
+      }
     } catch {
       setError("Invalid email or password");
     }
