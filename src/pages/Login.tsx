@@ -35,7 +35,11 @@ const Login = () => {
       const urlParams = new URLSearchParams(location.search);
       const redirectUrl = urlParams.get('redirect');
       if (redirectUrl) {
-        navigate(redirectUrl);
+        if (redirectUrl.startsWith('http')) {
+          window.location.href = redirectUrl;
+        } else {
+          navigate(redirectUrl);
+        }
       } else {
         navigate("/profile");
       }
