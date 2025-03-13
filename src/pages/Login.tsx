@@ -36,7 +36,8 @@ const Login = () => {
       const redirectUrl = urlParams.get('redirect');
       if (redirectUrl) {
         if (redirectUrl.startsWith('http')) {
-          window.location.href = redirectUrl;
+          const separator = redirectUrl.includes('?') ? '&' : '?';
+          window.location.href = `${redirectUrl}${separator}ref=adam`;
         } else {
           navigate(redirectUrl);
         }
