@@ -33,9 +33,8 @@ const Register = () => {
 
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, values);
-
       if (response.status !== 200 && response.status !== 201) throw new Error("Registration failed");
-      navigate("/login"); // Redirect to login page
+      navigate("/login");
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (axios.isAxiosError(error) && error.response) {
@@ -56,36 +55,19 @@ const Register = () => {
 
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         <Form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
-            <Field name="full_name" className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-            <ErrorMessage name="full_name" component="div" className="text-red-500 text-sm mt-1" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
-            <Field name="username" className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-            <ErrorMessage name="username" component="div" className="text-red-500 text-sm mt-1" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-            <Field name="email" type="email" className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-            <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-            <Field name="password" type="password" className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-            <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</label>
-            <Field name="confirmPassword" type="password" className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-            <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1" />
-          </div>
-
+          {[
+            { label: "Full Name", name: "full_name", type: "text" },
+            { label: "Username", name: "username", type: "text" },
+            { label: "Email", name: "email", type: "email" },
+            { label: "Password", name: "password", type: "password" },
+            { label: "Confirm Password", name: "confirmPassword", type: "password" },
+          ].map(({ label, name, type }) => (
+            <div key={name}>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
+              <Field name={name} type={type} className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
+              <ErrorMessage name={name} component="div" className="text-red-500 text-sm mt-1" />
+            </div>
+          ))}
           <Button type="submit" variant="primary" className="w-full">
             Register
           </Button>

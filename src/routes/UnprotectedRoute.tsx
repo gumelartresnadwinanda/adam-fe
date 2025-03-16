@@ -11,7 +11,6 @@ const UnprotectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (user) {
-      console.log(redirectUrl)
       if (redirectUrl) {
         if (redirectUrl.startsWith('http')) {
           const separator = redirectUrl.includes('?') ? '&' : '?';

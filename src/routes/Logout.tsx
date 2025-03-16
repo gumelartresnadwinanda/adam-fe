@@ -8,8 +8,8 @@ const Logout = () => {
 
   useEffect(() => {
     const performLogout = async () => {
-      await logout(); // Trigger the logout function
-      navigate("/login"); // Redirect to login page
+      await logout();
+      navigate("/login");
     };
 
     performLogout();

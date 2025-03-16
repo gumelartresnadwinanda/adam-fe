@@ -1,9 +1,9 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import * as Yup from "yup";
-import { Button } from "../components/Button";
 import axios from "axios";
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Button } from "../components/Button";
 import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
@@ -12,7 +12,6 @@ const Login = () => {
   const [error, setError] = useState("");
   const urlParams = new URLSearchParams(location.search);
   const redirectUrl = urlParams.get('redirect');
-
   const initialValues = { email: "", password: "" };
 
   const validationSchema = Yup.object({
@@ -38,18 +37,19 @@ const Login = () => {
 
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         <Form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-            <Field name="email" type="email" className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-            <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-            <Field name="password" type="password" className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-            <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
-          </div>
-
+          {["email", "password"].map((field) => (
+            <div key={field}>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                {field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              <Field
+                name={field}
+                type={field}
+                className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+              />
+              <ErrorMessage name={field} component="div" className="text-red-500 text-sm mt-1" />
+            </div>
+          ))}
           <Button type="submit" className="w-full" variant="primary">Sign In</Button>
         </Form>
       </Formik>
