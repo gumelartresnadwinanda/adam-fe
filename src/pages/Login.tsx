@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="py-10">
       <h2 className="text-xl font-bold mb-4 text-center text-gray-900 dark:text-gray-100">Sign In to Your Account</h2>
       {error && <p className="text-red-600 text-center mb-4">{error}</p>}
 
