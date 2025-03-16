@@ -3,8 +3,9 @@ import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import ProfilePage from "../pages/Profile";
 import AuthLayout from "../layouts/AuthLayout";
-import ProtectedRoute from "./ProtectedRoute";
 import Logout from "./Logout";
+import ProtectedRoute from "./ProtectedRoute";
+import UnprotectedRoute from "./UnprotectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -12,8 +13,8 @@ const AppRoutes = () => {
       <Routes>
         {/* Public Routes */}
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<UnprotectedRoute><LoginPage /></UnprotectedRoute>} />
+          <Route path="/register" element={<UnprotectedRoute><RegisterPage /></UnprotectedRoute>} />
         </Route>
 
         {/* Protected Routes */}
@@ -30,11 +31,9 @@ const AppRoutes = () => {
           />
         </Route>
 
-        {/* Logout Route */}
         <Route path="/logout" element={<Logout />} />
 
-        {/* Redirect unknown paths to login */}
-        <Route path="*" element={<Navigate to="/profile" />} />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );

@@ -7,7 +7,7 @@ interface LogoutIconProps {
 const LogoutIcon: React.FC<LogoutIconProps> = ({ onClick }) => (
   <div
     onClick={onClick}
-    className="p-2 rounded-md bg-red-100 hover:bg-red-200 cursor-pointer shadow-md"
+    className="p-2 rounded-md hover:bg-red-200 cursor-pointer shadow-md"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -21,7 +21,7 @@ const ThemeSwitch = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 w-10 h-10 flex items-center justify-center"
+      className="cursor-pointer p-3 hover:bg-gray-400 hover:dark:bg-gray-800 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 w-10 h-10 flex items-center justify-center"
     >
       {theme === "light" ? <SunIcon /> : <MoonIcon />}
     </button>

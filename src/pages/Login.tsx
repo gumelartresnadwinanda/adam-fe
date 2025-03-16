@@ -1,21 +1,17 @@
-import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import * as Yup from "yup";
 import { Button } from "../components/Button";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    document.title = "Sign In";
-  }, []);
+  const urlParams = new URLSearchParams(location.search);
+  const redirectUrl = urlParams.get('redirect');
 
   const initialValues = { email: "", password: "" };
 
@@ -28,22 +24,8 @@ const Login = () => {
     setError("");
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, values, { withCredentials: true });
-
       if (response.status !== 200 && response.status !== 201) throw new Error("Login failed");
-
-      login();
-      const urlParams = new URLSearchParams(location.search);
-      const redirectUrl = urlParams.get('redirect');
-      if (redirectUrl) {
-        if (redirectUrl.startsWith('http')) {
-          const separator = redirectUrl.includes('?') ? '&' : '?';
-          window.location.href = `${redirectUrl}${separator}ref=adam`;
-        } else {
-          navigate(redirectUrl);
-        }
-      } else {
-        navigate("/profile");
-      }
+      login(response.data.user);
     } catch {
       setError("Invalid email or password");
     }
@@ -51,7 +33,7 @@ const Login = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900 dark:text-gray-100">Sign In to Your Account</h2>
+      <h2 className="text-xl font-bold mb-4 text-center text-gray-900 dark:text-gray-100">Sign In to Your Account</h2>
       {error && <p className="text-red-600 text-center mb-4">{error}</p>}
 
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -72,9 +54,14 @@ const Login = () => {
         </Form>
       </Formik>
 
-      <p className="text-center mt-4 text-gray-700 dark:text-gray-300">
-        Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
-      </p>
+      {
+        !redirectUrl && (
+          <p className="text-center mt-4 text-gray-700 dark:text-gray-300">
+            Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
+          </p>
+
+        )
+      }
     </div>
   );
 };
